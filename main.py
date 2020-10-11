@@ -75,7 +75,6 @@ def main():
                 float(galaxy_info[12]),int(galaxy_info[13]),int(galaxy_info[14]),int(galaxy_info[15])])
         # 画像のnparray保存
         np.save('data/npz/' + str(objid), img_galaxy)
-        # test
         
         
         
