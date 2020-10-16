@@ -8,6 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 
+from tqdm.notebook import tqdm
+
 DEG_CORRESPONDING_TO_5S = 0.00138889
 
 def main():
@@ -15,8 +17,8 @@ def main():
     csv_obj = open('data/csv/galaxy_csv.csv','w',newline='')
     w_csv = csv.writer(csv_obj)
 
-    # Galaxy Zooの表の上から 1000行目までを順に取り出す
-    for galaxy_info in gz_table[:1000]:
+    # Galaxy Zooの表の上から i行目までを順に取り出す
+    for galaxy_info in tqdm(gz_table[:10000]):
 
         # Galaxy Zooの表からobjid, ra, decを取り出す
         objid = galaxy_info[0]
@@ -35,7 +37,8 @@ def main():
         frame = str(params['frame'])
 
         # objidの銀河が含まれるfitsファイルを開く
-        fits = astropy.io.fits.open('../r_yaku1000ko/fpC-' + run.zfill(6) + '-r' + camcol + '-' + frame.zfill(4) + '.fit.gz')
+        fits = astropy.io.fits.open('/home/homma/hdd/hdd2/data_set/r_bands/data_rbands/' + run.zfill(6) + '/fpC-' + run.zfill(6) + '-r' + camcol\
+         + '-' + frame.zfill(4) + '.fit.gz')
         data = fits[0].data
         header = fits[0].header
         
@@ -62,7 +65,8 @@ def main():
         # cd1_2 = abs(header['CD1_2'])
         # pix_corresponding_to_5s = round(DEG_CORRESPONDING_TO_5S / cd1_2)
         
-        print(px, py, pix_corresponding_to_5s, header['CTYPE1'])
+        # ra,dec がきちんとなっているか表示する
+        # print(px, py, pix_corresponding_to_5s, header['CTYPE1'])
         plt.hlines(y=17, xmin=10, xmax=10+pix_corresponding_to_5s)
 
         plt.savefig('data/img/' + str(objid), bbox_inches='tight')
