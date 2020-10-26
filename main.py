@@ -17,6 +17,7 @@ def main():
     csv_obj = open('data/csv/galaxy_csv.csv','w',newline='')
     w_csv = csv.writer(csv_obj)
 
+    count=0
     # Galaxy Zooの表の上から i行目までを順に取り出す
     for galaxy_info in tqdm(gz_table[:10000]):
 
@@ -66,7 +67,8 @@ def main():
         # pix_corresponding_to_5s = round(DEG_CORRESPONDING_TO_5S / cd1_2)
         
         # ra,dec がきちんとなっているか表示する
-        # print(px, py, pix_corresponding_to_5s, header['CTYPE1'])
+        if(objid == '587724198813433876','587724199349518483'):
+            print(count,px, py, pix_corresponding_to_5s, header['CTYPE1'])
         plt.hlines(y=17, xmin=10, xmax=10+pix_corresponding_to_5s)
 
         plt.savefig('data/img/' + str(objid), bbox_inches='tight')
@@ -81,7 +83,7 @@ def main():
         np.save('data/npz/' + str(objid), img_galaxy)
         
         
-        
+        count += 1
         # 画像とGalaxy Zooのデータをnpzで保存する
         #np.savez('data/npz/' + str(objid), img_galaxy, galaxy_info, px_error)
         # img = Image.fromarray(np.uint8(fits[0].data[py-r:py+r, px-r:px+r]))
