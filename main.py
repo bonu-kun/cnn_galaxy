@@ -8,7 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 
-from tqdm.notebook import tqdm
+from tqdm import tqdm
+import time
 
 DEG_CORRESPONDING_TO_5S = 0.00138889
 
@@ -19,7 +20,7 @@ def main():
 
     count=0
     # Galaxy Zooの表の上から i行目までを順に取り出す
-    for galaxy_info in tqdm(gz_table[:10000]):
+    for galaxy_info in gz_table[:10000]:
 
         # Galaxy Zooの表からobjid, ra, decを取り出す
         objid = galaxy_info[0]
@@ -51,6 +52,7 @@ def main():
         py = int(py)
         
 
+
         # 得られた座標を中心として画像を切り出し、保存する
         r = 30
         img_galaxy = data[py-r:py+r, px-r:px+r]
@@ -62,15 +64,14 @@ def main():
             pix_corresponding_to_5s = round(DEG_CORRESPONDING_TO_5S / header['cd1_1'])
         else:
             pix_corresponding_to_5s = round(DEG_CORRESPONDING_TO_5S / header['cd1_2'])
-            
         # cd1_2 = abs(header['CD1_2'])
         # pix_corresponding_to_5s = round(DEG_CORRESPONDING_TO_5S / cd1_2)
-        
-        # ra,dec がきちんとなっているか表示する
-        if(objid == '587724198813433876','587724199349518483'):
-            print(count,px, py, pix_corresponding_to_5s, header['CTYPE1'])
-        plt.hlines(y=17, xmin=10, xmax=10+pix_corresponding_to_5s)
 
+        # printで確認
+        # if objid == 587724198813433876 or objid == 587724199349518483:
+        print(count,ra_deg,dec_deg,px, py, pix_corresponding_to_5s, header['CTYPE1'])
+
+        plt.hlines(y=17, xmin=10, xmax=10+pix_corresponding_to_5s)
         plt.savefig('data/img/' + str(objid), bbox_inches='tight')
         plt.close()
 
