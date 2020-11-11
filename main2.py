@@ -15,10 +15,7 @@ DEG_CORRESPONDING_TO_5S = 0.00138889
 
 def main():
     gz_table = Table.read('GalaxyZoo1_DR_table2.fits')
-    csv_obj = open('data/csv/galaxy_csv.csv','w',newline='')
-    w_csv = csv.writer(csv_obj)
 
-    count=0
     # Galaxy Zooの表の上から i行目までを順に取り出す
     for galaxy_info in tqdm(gz_table[:15000]):
 
@@ -77,19 +74,15 @@ def main():
 
         
         # Tableの情報をcsvに保存する
-        w_csv.writerow([galaxy_info[0],galaxy_info[1],galaxy_info[2],int(galaxy_info[3]),float(galaxy_info[4]),float(galaxy_info[5]),
-                float(galaxy_info[6]),float(galaxy_info[7]),float(galaxy_info[8]),float(galaxy_info[9]),float(galaxy_info[10]),float(galaxy_info[11]),
-                float(galaxy_info[12]),int(galaxy_info[13]),int(galaxy_info[14]),int(galaxy_info[15])])
+     
         # 画像のnparray保存
         np.save('data/npz/' + str(objid), img_galaxy)
         
         
-        count += 1
         # 画像とGalaxy Zooのデータをnpzで保存する
         #np.savez('data/npz/' + str(objid), img_galaxy, galaxy_info, px_error)
         # img = Image.fromarray(np.uint8(fits[0].data[py-r:py+r, px-r:px+r]))
         
-    csv_obj.close()
     
 if __name__ == '__main__':
     main()
