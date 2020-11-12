@@ -51,7 +51,7 @@ def main():
 
 
         # 得られた座標を中心として画像を切り出し、保存する
-        r = 30
+        r = 32
         img_galaxy = data[py-r:py+r, px-r:px+r]
         plt.title('RA = {}, Dec = {}'.format(ra_hms, dec_hms))
         plt.imshow(np.log10(img_galaxy.T[::-1, ::-1]), cmap='gray', vmin=3.05, vmax=3.09)
